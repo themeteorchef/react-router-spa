@@ -1,39 +1,45 @@
 import React from 'react';
 import { ButtonToolbar, ButtonGroup, Button } from 'react-bootstrap';
-import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { removeDocument } from '../../api/documents/methods.js';
 
-const handleRemove = (_id) => {
+const handleRemove = (_id, setCurrentPage) => {
   if (confirm('Are you sure? This is permanent!')) {
     removeDocument.call({ _id }, (error) => {
       if (error) {
         Bert.alert(error.reason, 'danger');
       } else {
         Bert.alert('Document deleted!', 'success');
-        browserHistory.push('/documents');
+        setCurrentPage(null, { page: 'documents' });
       }
     });
   }
 };
 
-const ViewDocument = ({ doc }) => (
+const ViewDocument = ({ doc, setCurrentPage }) => (
   <div className="ViewDocument">
     <div className="page-header clearfix">
-      <h4 className="pull-left">{ doc.title }</h4>
+      <h4 className="pull-left">{ doc && doc.title }</h4>
       <ButtonToolbar className="pull-right">
         <ButtonGroup bsSize="small">
-          <Button href={`/documents/${doc._id}/edit`}>Edit</Button>
-          <Button onClick={ () => handleRemove(doc._id) } className="text-danger">Delete</Button>
+          <Button
+            onClick={(event) => {
+              setCurrentPage(event, { page: 'editDocument', props: { doc } });
+            }}
+          >Edit</Button>
+          <Button
+            onClick={ () => handleRemove(doc._id, setCurrentPage) }
+            className="text-danger">Delete</Button>
         </ButtonGroup>
       </ButtonToolbar>
     </div>
-    { doc.body }
+    { doc && doc.body }
   </div>
 );
 
 ViewDocument.propTypes = {
-  doc: React.PropTypes.object.isRequired,
+  doc: React.PropTypes.object,
+  setCurrentPage: React.PropTypes.func,
 };
 
 export default ViewDocument;

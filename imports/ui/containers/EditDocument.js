@@ -4,12 +4,12 @@ import Documents from '../../api/documents/documents.js';
 import EditDocument from '../pages/EditDocument.js';
 import { Loading } from '../components/Loading.js';
 
-const composer = ({ params }, onData) => {
-  const subscription = Meteor.subscribe('documents.edit', params._id);
+const composer = ({ doc }, onData) => {
+  const subscription = Meteor.subscribe('documents.edit', doc._id);
 
   if (subscription.ready()) {
-    const doc = Documents.findOne();
-    onData(null, { doc });
+    const currentDoc = Documents.findOne();
+    onData(null, { doc: currentDoc });
   }
 };
 

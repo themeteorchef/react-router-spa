@@ -22,7 +22,10 @@ const handleUpsert = () => {
     } else {
       component.form.reset();
       Bert.alert(confirmation, 'success');
-      browserHistory.push(`/documents/${insertedId || doc._id}`);
+      upsert._id = doc && doc._id ? doc._id : insertedId;
+      component.props.setCurrentPage(null, {
+        page: 'viewDocument', props: { doc: upsert }
+      });
     }
   });
 };

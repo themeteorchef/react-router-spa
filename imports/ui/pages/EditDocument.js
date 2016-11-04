@@ -1,10 +1,10 @@
 import React from 'react';
 import DocumentEditor from '../components/DocumentEditor.js';
 
-const EditDocument = ({ doc }) => (
+const EditDocument = props => (
   <div className="EditDocument">
-    <h4 className="page-header">Editing "{ doc.title }"</h4>
-    <DocumentEditor doc={ doc } />
+    <h4 className="page-header">Editing "{ props.doc.title }"</h4>
+    <DocumentEditor { ...props } />
   </div>
 );
 

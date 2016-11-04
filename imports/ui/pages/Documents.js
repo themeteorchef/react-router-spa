@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import DocumentsList from '../containers/DocumentsList.js';
 
-const Documents = () => (
+const Documents = props => (
   <Row>
     <Col xs={ 12 }>
       <div className="page-header clearfix">
@@ -10,12 +10,16 @@ const Documents = () => (
         <Button
           bsStyle="success"
           className="pull-right"
-          href="/documents/new"
+          onClick={(event) => { props.setCurrentPage(event, { page: 'newDocument' }); }}
         >New Document</Button>
       </div>
-      <DocumentsList />
+      <DocumentsList { ...props } />
     </Col>
   </Row>
 );
+
+Documents.propTypes = {
+  setCurrentPage: React.PropTypes.func,
+};
 
 export default Documents;

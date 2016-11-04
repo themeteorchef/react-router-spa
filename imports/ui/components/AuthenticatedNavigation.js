@@ -12,15 +12,19 @@ const userName = () => {
   return user ? `${name.first} ${name.last}` : '';
 };
 
-const AuthenticatedNavigation = () => (
+const AuthenticatedNavigation = ({ currentPage, setCurrentPage }) => (
   <div>
     <Nav>
-      <IndexLinkContainer to="/">
-        <NavItem eventKey={ 1 } href="/">Index</NavItem>
-      </IndexLinkContainer>
-      <LinkContainer to="/documents">
-        <NavItem eventKey={ 2 } href="/documents">Documents</NavItem>
-      </LinkContainer>
+      <NavItem
+        active={ currentPage === 'index' }
+        eventKey={ 1 }
+        onClick={(event) => { setCurrentPage(event, { page: 'index' }); }}
+      >Index</NavItem>
+      <NavItem
+        active={ currentPage === 'documents' }
+        eventKey={ 2 }
+        onClick={(event) => { setCurrentPage(event, { page: 'documents' }); }}
+      >Documents</NavItem>
     </Nav>
     <Nav pullRight>
       <NavDropdown eventKey={ 3 } title={ userName() } id="basic-nav-dropdown">
@@ -29,5 +33,10 @@ const AuthenticatedNavigation = () => (
     </Nav>
   </div>
 );
+
+AuthenticatedNavigation.propTypes = {
+  currentPage: React.PropTypes.string,
+  setCurrentPage: React.PropTypes.func,
+};
 
 export default AuthenticatedNavigation;
