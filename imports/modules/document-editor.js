@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import 'jquery-validation';
-import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { upsertDocument } from '../api/documents/methods.js';
 
